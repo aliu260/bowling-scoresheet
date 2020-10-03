@@ -1,0 +1,43 @@
+<div class="container mb-3">
+  <div>
+    <label>Player Name:</label>
+    <input class="ml-1" [(ngModel)]="playerNameEntry" (keyup.enter)="addPlayer()"/>
+    <button class="btn-primary ml-1 mr-3" [disabled]="players.length >= 4 || isStarted" (click)="addPlayer()">Add Player</button>
+    <button class="btn-danger mr-3" [disabled]="players.length < 2 || isStarted" (click)="startGame()">START GAME!</button>
+    <button class="btn-secondary" (click)="reset()">New Game</button>
+  </div>
+</div>
+
+<table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Player Name</th>
+      <th *ngFor="let item of [].constructor(10); let i = index" scope="col">Frame {{i+1}}</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of players; let i = index">
+      <th scope="row">{{player.name}}</th>
+      <td *ngFor="let frame of player.frames; let j = index">
+        <div class="row">
+          <div class="col" *ngIf="frame.roll1 || isSelected(i, j, 1)" (click)="onSelect(i,j,1)">
+            <span *ngIf="!isSelected(i, j, 1); else r1Entry">{{frame.roll1Display}}</span>
+            <ng-template #r1Entry><input maxlength="1" (keydown)="keyPress($event)" [ngModel]="frame.roll1Display" (change)="onUpdate($event, i, j, 1)"/></ng-template>
+          </div>
+          <div class="col" *ngIf="frame.roll2 || isSelected(i, j, 2)" (click)="onSelect(i,j,2)">
+            <span *ngIf="!isSelected(i, j, 2); else r2Entry">{{frame.roll2Display}}</span>
+            <ng-template #r2Entry><input maxlength="1" (keydown)="keyPress($event)" [ngModel]="frame.roll2Display" (change)="onUpdate($event, i, j, 2)"/></ng-template>
+          </div>
+          <div class="col" *ngIf="(frame.roll3 || (j === 9 && isSelected(i, j, 3)))" (click)="onSelect(i,j,3)">
+            <span *ngIf="!isSelected(i, j, 3); else r3Entry">{{frame.roll3Display}}</span>
+            <ng-template #r3Entry><input maxlength="1" (keydown)="keyPress($event)" [ngModel]="frame.roll3Display" (change)="onUpdate($event, i, j, 3)"/></ng-template>
+          </div>
+        </div>
+      </td>
+      <td>
+        <span>{{player.total}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
