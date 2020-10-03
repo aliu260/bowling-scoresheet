@@ -8,6 +8,7 @@ Requires Angular CLI version 10+ and [Node.js](https://nodejs.org/en/).
 After installing Node.js, can run `npm install -g @angular-cli` to install angular. 
 
 Navigate to the root "bowling-scoresheet" directory. 
+First run `npm install` to install packages and dependencies needed to run app.
 Run `ng serve` or `npm start` for a dev server. 
 Navigate to `http://localhost:4200/` to view and use the app. The app will automatically reload if you change any of the source files.
 
